@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight, Calendar, ChevronDown } from "lucide-react"
+import { ChevronLeft, ChevronRight, Calendar, ChevronDown, Wand2 } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
@@ -53,7 +53,7 @@ export function CalendarHeader({ currentDate, onDateChange, currentView, onViewC
       {/* Right side - View tabs and navigation */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full sm:w-auto">
         {/* View selection tabs */}
-        <div className="flex bg-gray-100 rounded-lg p-1 w-full sm:w-auto">
+        <div className=" bg-gray-100 rounded-lg p-1 w-full sm:w-auto hidden">
           {views.map((view) => (
             <Button
               key={view.key}
@@ -63,7 +63,7 @@ export function CalendarHeader({ currentDate, onDateChange, currentView, onViewC
               className={cn(
                 "px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium transition-colors flex-1 sm:flex-none",
                 currentView === view.key
-                  ? "bg-pink-400 text-white hover:bg-pink-500"
+                  ? "bg-orange-400 text-white hover:bg-orange-500"
                   : "text-gray-600 hover:text-gray-800 hover:bg-gray-200"
               )}
             >
@@ -92,9 +92,9 @@ export function CalendarHeader({ currentDate, onDateChange, currentView, onViewC
             variant="ghost" 
             size="icon" 
             onClick={onRoutineClick}
-            className="h-8 w-8 text-blue-500 hover:text-blue-700 hover:bg-blue-50"
+            className="h-8 w-8 text-orange-500 hover:text-orange-700 hover:bg-orange-50"
           >
-            <Calendar className="h-4 w-4" />
+            <Wand2 className="h-4 w-4" />
           </Button>
         </div>
       </div>

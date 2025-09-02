@@ -5,9 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
 import { X, Check, Grid3X3, Calendar, Clock, RotateCcw, Plus, Menu, Globe, Sun, Moon, Edit, Star, Trash2 } from "lucide-react"
-import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 
 interface RoutineModalProps {
@@ -165,13 +163,10 @@ export function RoutineModal({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="w-[95vw] max-w-2xl bg-gray-50 border-0 shadow-xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="flex flex-row items-center justify-between pb-4">
+        <DialogHeader className="flex flex-row items-center justify-between">
           <DialogTitle className="text-lg font-semibold text-gray-800">
             {editingRoutine ? "Edit Routine" : isCreatingNew ? "Create New Routine" : "Routine Manager"}
           </DialogTitle>
-          <Button variant="ghost" size="icon" onClick={onClose} className="h-8 w-8">
-            <X className="h-4 w-4" />
-          </Button>
         </DialogHeader>
 
         {(editingRoutine || isCreatingNew) ? (
@@ -203,7 +198,7 @@ export function RoutineModal({
               placeholder="Routine Name (e.g., Morning Routine, Work Day)"
               value={routineName}
               onChange={(e) => setRoutineName(e.target.value)}
-              className="flex-1 border-gray-300 focus:border-pink-400 focus:ring-pink-400"
+              className="flex-1 border-gray-300 focus:border-orange-400 focus:ring-orange-400"
             />
           </div>
 
@@ -222,7 +217,7 @@ export function RoutineModal({
                   className={cn(
                     "px-3 py-1 text-sm",
                     selectedDays.includes(day.key)
-                      ? "bg-pink-400 text-white hover:bg-pink-500"
+                      ? "bg-orange-400 text-white hover:bg-orange-500"
                       : "bg-white border-gray-300 text-gray-600 hover:bg-gray-50"
                   )}
                 >
@@ -243,7 +238,7 @@ export function RoutineModal({
                 variant="ghost"
                 size="sm"
                 onClick={handleAddActivity}
-                className="text-pink-400 hover:text-pink-500"
+                className="text-orange-400 hover:text-orange-500"
               >
                 <Plus className="h-4 w-4 mr-1" />
                 Add Activity
@@ -260,7 +255,7 @@ export function RoutineModal({
                         type="time"
                         value={activity.time}
                         onChange={(e) => handleUpdateActivity(activity.id, "time", e.target.value)}
-                        className="w-auto border-gray-300 focus:border-pink-400 focus:ring-pink-400"
+                        className="w-auto border-gray-300 focus:border-orange-400 focus:ring-orange-400"
                       />
                     </div>
                     
@@ -268,7 +263,7 @@ export function RoutineModal({
                       <select
                         value={activity.icon}
                         onChange={(e) => handleUpdateActivity(activity.id, "icon", e.target.value)}
-                        className="border border-gray-300 rounded px-2 py-1 text-sm focus:border-pink-400 focus:ring-pink-400"
+                        className="border border-gray-300 rounded px-2 py-1 text-sm focus:border-orange-400 focus:ring-orange-400"
                       >
                         <option value="☀️">☀️</option>
                         <option value="🌙">🌙</option>
@@ -287,13 +282,13 @@ export function RoutineModal({
                       placeholder="Activity name"
                       value={activity.title}
                       onChange={(e) => handleUpdateActivity(activity.id, "title", e.target.value)}
-                      className="flex-1 border-gray-300 focus:border-pink-400 focus:ring-pink-400"
+                      className="flex-1 border-gray-300 focus:border-orange-400 focus:ring-orange-400"
                     />
 
                     <select
                       value={activity.duration}
                       onChange={(e) => handleUpdateActivity(activity.id, "duration", e.target.value)}
-                      className="border border-gray-300 rounded px-2 py-1 text-sm focus:border-pink-400 focus:ring-pink-400"
+                      className="border border-gray-300 rounded px-2 py-1 text-sm focus:border-orange-400 focus:ring-orange-400"
                     >
                       {durations.map(duration => (
                         <option key={duration} value={duration}>{duration}</option>
@@ -321,7 +316,7 @@ export function RoutineModal({
                       placeholder="Add description for this activity (optional)"
                       value={activity.description || ""}
                       onChange={(e) => handleUpdateActivity(activity.id, "description", e.target.value)}
-                      className="flex-1 min-h-[60px] border-gray-300 focus:border-pink-400 focus:ring-pink-400 bg-white text-sm"
+                      className="flex-1 min-h-[60px] border-gray-300 focus:border-orange-400 focus:ring-orange-400 bg-white text-sm"
                     />
                   </div>
                 </div>
@@ -338,7 +333,7 @@ export function RoutineModal({
               placeholder="Add notes about your routine..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="min-h-[80px] border-gray-300 focus:border-pink-400 focus:ring-pink-400 bg-white"
+              className="min-h-[80px] border-gray-300 focus:border-orange-400 focus:ring-orange-400 bg-white"
             />
           </div>
 
@@ -346,7 +341,7 @@ export function RoutineModal({
             <div className="flex justify-end pt-4">
               <Button
                 onClick={editingRoutine ? handleUpdateRoutine : handleSave}
-                className="bg-pink-400 text-white hover:bg-pink-500 px-6"
+                className="bg-orange-400 text-white hover:bg-orange-500 px-6"
                 disabled={!routineName.trim() || activities.some(a => !a.title.trim())}
               >
                 {editingRoutine ? "Update Routine" : "Create Routine"}
@@ -360,7 +355,7 @@ export function RoutineModal({
               <h3 className="font-medium text-gray-800">Your Routines</h3>
               <Button
                 onClick={handleCreateNewRoutine}
-                className="bg-pink-400 text-white hover:bg-pink-500"
+                className="bg-orange-400 text-white hover:bg-orange-500"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 New Routine
@@ -438,7 +433,7 @@ export function RoutineModal({
                     <div className="mt-3 pt-3 border-t border-gray-100">
                       <div className="flex flex-wrap gap-1">
                         {routine.selectedDays?.map((day: string) => (
-                          <span key={day} className="px-2 py-1 bg-pink-100 text-pink-600 text-xs rounded">
+                          <span key={day} className="px-2 py-1 bg-orange-100 text-orange-600 text-xs rounded">
                             {day.charAt(0).toUpperCase() + day.slice(1)}
                           </span>
                         ))}

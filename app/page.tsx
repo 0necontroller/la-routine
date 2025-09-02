@@ -8,7 +8,8 @@ import { TaskModal } from "@/components/task-modal"
 import { RoutineModal } from "@/components/routine-modal"
 import { PWAInstall } from "@/components/pwa-install"
 import { Button } from "@/components/ui/button"
-import { Plus, Calendar } from "lucide-react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Plus, Calendar, Wand2 } from "lucide-react"
 
 export default function HomePage() {
   const [currentDate, setCurrentDate] = useState(new Date(2025, 8, 1)) // September 2025
@@ -19,6 +20,7 @@ export default function HomePage() {
   const [tasks, setTasks] = useState<any[]>([])
   const [routines, setRoutines] = useState<any[]>([])
   const [activeRoutineId, setActiveRoutineId] = useState<string | undefined>(undefined)
+  const [isApplyConfirmOpen, setIsApplyConfirmOpen] = useState(false)
 
   const getWeekKey = (date: Date) => {
     const start = startOfWeek(date, { weekStartsOn: 0 })
@@ -312,38 +314,7 @@ export default function HomePage() {
     }
   }
 
-  const handleTestNotification = () => {
-    if (typeof window === 'undefined') return
-    if (!('Notification' in window)) return
-    const send = () => {
-      const title = 'Test Notification'
-      const options = {
-        body: 'This is a test notification from the Routine PWA.',
-        icon: '/icon-192.png',
-        badge: '/icon-192.png',
-      } as NotificationOptions
-      if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-        navigator.serviceWorker.controller.postMessage({ type: 'SHOW_NOTIFICATION', title, options })
-      } else if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.ready.then(reg => {
-          if (reg.active) {
-            reg.active.postMessage({ type: 'SHOW_NOTIFICATION', title, options })
-          } else if (Notification.permission === 'granted') {
-            try { new Notification(title, options) } catch {}
-          }
-        })
-      } else if (Notification.permission === 'granted') {
-        try { new Notification(title, options) } catch {}
-      }
-    }
-    if (Notification.permission === 'granted') {
-      send()
-    } else {
-      Notification.requestPermission().then((p) => {
-        if (p === 'granted') send()
-      }).catch(() => {})
-    }
-  }
+  // Test Notification button removed
 
   const handleApplyRoutineToDate = (date: Date) => {
     if (!activeRoutineId) return
@@ -383,13 +354,7 @@ export default function HomePage() {
           onRoutineClick={() => setIsRoutineModalOpen(true)}
         />
 
-        <div className="px-4">
-          {/* Temporary: Test Notifications Button */}
-          <div className="flex justify-end mb-2">
-            <Button variant="outline" size="sm" onClick={handleTestNotification} className="text-xs">
-              Test Notification
-            </Button>
-          </div>
+        <div className="md:px-4 mt-4">
           <DayView
             currentDate={currentDate}
             selectedDate={selectedDate}
@@ -406,11 +371,50 @@ export default function HomePage() {
       {/* Floating Action Button */}
       <Button
         onClick={() => setIsTaskModalOpen(true)}
-        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-pink-400 hover:bg-pink-500 shadow-lg z-40"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-orange-400 hover:bg-orange-500 shadow-lg z-40"
         size="icon"
       >
         <Plus className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
       </Button>
+
+      {/* Apply Routine FAB */}
+      {selectedDate && activeRoutineId && (
+        <Button
+          onClick={() => setIsApplyConfirmOpen(true)}
+          className="fixed bottom-20 right-4 sm:bottom-24 sm:right-6 h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-orange-400 hover:bg-orange-500 shadow-lg z-40"
+          size="icon"
+          title="Apply active routine to selected day"
+        >
+          <Wand2 className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+        </Button>
+      )}
+
+      {/* Confirm Apply Routine */}
+      <Dialog open={isApplyConfirmOpen} onOpenChange={setIsApplyConfirmOpen}>
+        <DialogContent className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Apply routine to this day?</DialogTitle>
+          </DialogHeader>
+          <div className="text-sm text-gray-600">
+            This will replace all tasks on the selected day with activities from the active routine.
+          </div>
+          <div className="flex justify-end gap-2 pt-4">
+            <Button variant="outline" size="sm" onClick={() => setIsApplyConfirmOpen(false)}>Cancel</Button>
+            <Button
+              size="sm"
+              className="bg-orange-500 text-white hover:bg-orange-600"
+              onClick={() => {
+                if (selectedDate) {
+                  handleApplyRoutineToDate(selectedDate)
+                }
+                setIsApplyConfirmOpen(false)
+              }}
+            >
+              Apply
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <TaskModal
         isOpen={isTaskModalOpen}

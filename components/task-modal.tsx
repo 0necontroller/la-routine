@@ -158,13 +158,10 @@ export function TaskModal({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="!max-w-3xl bg-gray-50 border-0 shadow-xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="flex flex-row items-center justify-between pb-4">
+        <DialogHeader className="flex flex-row items-center justify-between">
           <DialogTitle className="text-lg font-semibold text-gray-800">
             New Task
           </DialogTitle>
-          <Button variant="ghost" size="icon" onClick={onClose} className="h-8 w-8">
-            <X className="h-4 w-4" />
-          </Button>
         </DialogHeader>
 
         <div className="space-y-6">
@@ -176,7 +173,7 @@ export function TaskModal({
                 </div>
                 <h3 className="font-medium text-gray-800">Programming Templates</h3>
               </div>
-              <div className="flex gap-3 overflow-x-auto max-w-2xl pb-2">
+              <div className="flex gap-3 overflow-x-auto max-w-[320px] md:max-w-2xl pb-2">
                 {programmingTemplates.map((template) => (
                   <div
                     key={template.id}
@@ -184,7 +181,7 @@ export function TaskModal({
                     className={cn(
                       "flex-shrink-0 w-48 p-3 bg-white rounded-lg border-2 cursor-pointer transition-colors",
                       selectedTemplate?.id === template.id
-                        ? "border-pink-400 bg-pink-50"
+                        ? "border-orange-400 bg-orange-50"
                         : "border-gray-200 hover:border-gray-300"
                     )}
                   >
@@ -194,7 +191,7 @@ export function TaskModal({
                     </div>
                     <p className="text-xs text-gray-600 mb-2">{template.description}</p>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-pink-400 font-medium">{template.duration}</span>
+                      <span className="text-xs text-orange-400 font-medium">{template.duration}</span>
                       <span className="text-xs text-gray-500">{template.category}</span>
                     </div>
                   </div>
@@ -211,7 +208,7 @@ export function TaskModal({
                 placeholder="Task Title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="flex-1 border-gray-300 focus:border-pink-400 focus:ring-pink-400"
+                className="flex-1 border-gray-300 focus:border-orange-400 focus:ring-orange-400"
               />
               <div className="w-4 h-4 bg-red-500 rounded-full"></div>
               <Button variant="ghost" size="icon" className="h-6 w-6">
@@ -229,7 +226,7 @@ export function TaskModal({
                   <select
                     value={selectedRoutine}
                     onChange={(e) => setSelectedRoutine(e.target.value)}
-                    className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:border-pink-400 focus:ring-pink-400"
+                    className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:border-orange-400 focus:ring-orange-400"
                   >
                     <option value="">Select a routine (optional)</option>
                     {routines.map((routine) => (
@@ -255,7 +252,7 @@ export function TaskModal({
                   className={cn(
                     "flex items-center gap-2",
                     taskType === "planned" 
-                      ? "bg-pink-400 text-white hover:bg-pink-500" 
+                      ? "bg-orange-400 text-white hover:bg-orange-500" 
                       : "bg-white border-gray-300 text-gray-600 hover:bg-gray-50"
                   )}
                 >
@@ -269,7 +266,7 @@ export function TaskModal({
                   className={cn(
                     "flex items-center gap-2",
                     taskType === "inbox" 
-                      ? "bg-pink-400 text-white hover:bg-pink-500" 
+                      ? "bg-orange-400 text-white hover:bg-orange-500" 
                       : "bg-white border-gray-300 text-gray-600 hover:bg-gray-50"
                   )}
                 >
@@ -288,7 +285,7 @@ export function TaskModal({
               <Input
                 type="date"
                 value={selectedDate ? format(selectedDate, "yyyy-MM-dd") : format(new Date(), "yyyy-MM-dd")}
-                className="w-auto border-gray-300 focus:border-pink-400 focus:ring-pink-400"
+                className="w-auto border-gray-300 focus:border-orange-400 focus:ring-orange-400"
                 readOnly
               />
               <Button variant="ghost" size="icon" className="h-6 w-6">
@@ -300,7 +297,7 @@ export function TaskModal({
                   id="all-day"
                   checked={isAllDay}
                   onChange={(e) => setIsAllDay(e.target.checked)}
-                  className="rounded border-gray-300 focus:ring-pink-400"
+                  className="rounded border-gray-300 focus:ring-orange-400"
                 />
                 <Label htmlFor="all-day" className="text-sm text-gray-600">
                   All-Day
@@ -320,14 +317,14 @@ export function TaskModal({
                   type="time"
                   value={startTime}
                   onChange={(e) => setStartTime(e.target.value)}
-                  className="w-auto border-gray-300 focus:border-pink-400 focus:ring-pink-400"
+                  className="w-auto border-gray-300 focus:border-orange-400 focus:ring-orange-400"
                 />
                 <span className="text-sm text-gray-500">→</span>
                 <Input 
                   type="time" 
                   value={endTime} 
                   onChange={(e) => setEndTime(e.target.value)} 
-                  className="w-auto border-gray-300 focus:border-pink-400 focus:ring-pink-400" 
+                  className="w-auto border-gray-300 focus:border-orange-400 focus:ring-orange-400" 
                 />
                 <Button variant="ghost" size="icon" className="h-6 w-6">
                   <Globe className="h-4 w-4 text-gray-600" />
@@ -354,7 +351,7 @@ export function TaskModal({
                     className={cn(
                       "px-3 py-1 text-sm",
                       selectedDuration === duration && !customDuration
-                        ? "bg-pink-400 text-white hover:bg-pink-500"
+                        ? "bg-orange-400 text-white hover:bg-orange-500"
                         : "bg-white border-gray-300 text-gray-600 hover:bg-gray-50"
                     )}
                   >
@@ -378,7 +375,7 @@ export function TaskModal({
                     setCustomDuration(e.target.value)
                     setSelectedDuration("")
                   }}
-                  className="w-48 border-gray-300 focus:border-pink-400 focus:ring-pink-400"
+                  className="w-48 border-gray-300 focus:border-orange-400 focus:ring-orange-400"
                 />
                 <span className="text-sm text-gray-600">minutes</span>
               </div>
@@ -389,7 +386,7 @@ export function TaskModal({
             <div className="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
               <Check className="h-4 w-4 text-gray-600" />
             </div>
-            <Button variant="ghost" className="text-pink-400 hover:text-pink-500 p-0 h-auto">
+            <Button variant="ghost" className="text-orange-400 hover:text-orange-500 p-0 h-auto">
               + Add Subtask
             </Button>
           </div>
@@ -403,7 +400,7 @@ export function TaskModal({
               placeholder="Add notes, meeting links or phone numbers..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="min-h-[80px] border-gray-300 focus:border-pink-400 focus:ring-pink-400 bg-white"
+              className="min-h-[80px] border-gray-300 focus:border-orange-400 focus:ring-orange-400 bg-white"
             />
           </div>
 
@@ -411,7 +408,7 @@ export function TaskModal({
           <div className="flex justify-end pt-4">
             <Button
               onClick={handleSave}
-              className="bg-pink-400 text-white hover:bg-pink-500 px-6"
+              className="bg-orange-400 text-white hover:bg-orange-500 px-6"
               disabled={!title.trim()}
             >
               Create Task

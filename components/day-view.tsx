@@ -114,7 +114,7 @@ export function DayView({ currentDate, selectedDate, onDateSelect, tasks, onTogg
           key={task.id}
           className={cn(
             "w-3 h-3 rounded-full",
-            index === 0 ? "bg-pink-400" : "bg-blue-400"
+            index === 0 ? "bg-orange-400" : "bg-blue-400"
           )}
         />
       ))
@@ -142,27 +142,12 @@ export function DayView({ currentDate, selectedDate, onDateSelect, tasks, onTogg
               variant="ghost"
               className={cn(
                 "w-full h-16 sm:h-20 rounded-lg border-2 border-transparent flex flex-col items-center justify-center gap-1 sm:gap-2 relative",
-                selectedDate && isSameDay(day, selectedDate) && "border-pink-400 bg-pink-50",
+                selectedDate && isSameDay(day, selectedDate) && "border-orange-400 bg-orange-50",
                 !isSameMonth(day, currentDate) && "opacity-50",
               )}
               onClick={() => onDateSelect(day)}
             >
               <div className="flex gap-0.5 sm:gap-1">{getTaskIndicators(day)}</div>
-              {selectedDate && isSameDay(day, selectedDate) && (
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute top-1 right-1 h-6 w-6 text-pink-500 hover:text-pink-600 hover:bg-pink-50"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    onApplyRoutineToDate(day)
-                  }}
-                  title="Apply active routine to this day"
-                >
-                  <Wand2 className="h-3.5 w-3.5" />
-                </Button>
-              )}
             </Button>
           </div>
         ))}
@@ -226,7 +211,7 @@ export function DayView({ currentDate, selectedDate, onDateSelect, tasks, onTogg
                       ) : (
                         <div className={cn(
                           "w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white text-xs sm:text-sm",
-                          task.icon === "☀️" ? "bg-pink-400" : "bg-blue-400",
+                          task.icon === "☀️" ? "bg-orange-400" : "bg-blue-400",
                           isPast && "opacity-60"
                         )}>
                           {task.icon}
@@ -249,8 +234,8 @@ export function DayView({ currentDate, selectedDate, onDateSelect, tasks, onTogg
                           className={cn(
                             "w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 transition-colors flex-shrink-0",
                             task.completed 
-                              ? "bg-pink-400 border-pink-400" 
-                              : "border-gray-300 hover:border-pink-400"
+                              ? "bg-orange-400 border-orange-400" 
+                              : "border-gray-300 hover:border-orange-400"
                           )}
                         >
                           {task.completed && (
@@ -322,7 +307,7 @@ export function DayView({ currentDate, selectedDate, onDateSelect, tasks, onTogg
                           "text-xs sm:text-sm mt-1",
                           task.completed ? "text-gray-400 line-through italic" : (isPast ? "text-gray-400" : "text-gray-600")
                         )}>
-                          <span className="text-pink-400 font-medium">{task.description.split(" ")[0]} {task.description.split(" ")[1]}</span>
+                          <span className="text-orange-400 font-medium">{task.description.split(" ")[0]} {task.description.split(" ")[1]}</span>
                           <span className="text-gray-500"> {task.description.split(" ").slice(2).join(" ")}</span>
                         </p>
                       )}
@@ -352,7 +337,7 @@ export function DayView({ currentDate, selectedDate, onDateSelect, tasks, onTogg
                         <Button variant="outline" size="sm" onClick={() => setIsEditOpen(false)}>Cancel</Button>
                         <Button
                           size="sm"
-                          className="bg-pink-400 text-white hover:bg-pink-500"
+                          className="bg-orange-400 text-white hover:bg-orange-500"
                           onClick={() => {
                             if (editingTaskId) {
                               // compute duration from start/end
