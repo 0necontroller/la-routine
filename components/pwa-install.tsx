@@ -36,7 +36,7 @@ export function PWAInstall() {
 
   return (
     <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
-      <div className="bg-card border rounded-lg p-4 shadow-lg flex items-center gap-3">
+      <div className="bg-card border rounded-lg p-4 shadow-lg flex flex-col md:flex-row items-center gap-3">
         <div className="flex-1">
           <p className="text-sm font-medium">Install Routine Planner</p>
           <p className="text-xs text-muted-foreground">Add to your home screen for quick access</p>
